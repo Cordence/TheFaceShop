@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>PHP MySQL load sample</title>
+        <style type="text/css">
+            table {
+                border: 0;
+                border-collapse: collapse;
+                border-spacing: 0;
+            }
+            table td, table th {
+                border: 1px solid;
+                padding: 2px 5px 2px 5px;
+            }
+            .text-center { text-align: center; }
+            .text-right { text-align: right; }
+        </style>
+    </head>
+    
+    <body>
+        <?php
+            /* Load DB */
+	$servername = "54.152.131.106"; // my local IP where the MySQL server is
+   	 $username = "root";
+   	 $password = "mypassword";  //my fake database password
+    	$dbname = "mydb";  //your database name
+   	 $dbport = "3306";
+
+    	$conn = mysqli_connect($servername, $username, $password, $dbname, $dbport);
+
+
+            //$conn = mysqli_connect('localhost', 'id', 'passwd', 'hello');
+            if ( !$conn ) die('DB Error');
+ 
+            /* Set to UTF-8 Encoding */
+            mysqli_query($conn, 'set session character_set_connection=utf8;');
+            mysqli_query($conn, 'set session character_set_results=utf8;');
+            mysqli_query($conn, 'set session character_set_client=utf8;');
+              
+            /* Load data */
+            $query = 'SELECT * FROM customer2';
+            $result = mysqli_query($conn, $query);
+              
+            echo '<table class="text-center"><tr>' .
+                '<th>아이디</th><th>왼쪽온도</th><th>오른쪽온도</th><th>점수</th><th>시간</th>' .
+                '</tr>';
+            while( $row = mysqli_fetch_array($result) ) {
+                echo '<tr><td>' . $row['id'] . '</td>' .
+                    '<td>' . $row['leftTemp'] . '</td>' .
+	        '<td>' . $row['rightTemp'] . '</td>' .
+	        '<td>' . $row['score'] . '</td>' .
+                    '<td class="text-right">' . $row['time'] . '</td></tr>';
+            }
+  
+            echo '</table>';
+            mysqli_close($conn);
+        ?>
+    </body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>결과 안내창</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=medium-dpi">
+<meta name="title"  property="og:title" content="Hust">
+<meta name="images" property="og:image" content="./images/link_thumb.jpg">
+<meta name="description" property="og:description" content="Hust">
+<meta name="type" property="og:type" content="article">
+<link rel="stylesheet" type="text/css" href="./css/uiplus.css">
+</head>
+<body>
+
+
+
+
+
+
+      <?php
+            /* Load DB */
+	$servername = "54.152.131.106"; // my local IP where the MySQL server is
+   	 $username = "root";
+   	 $password = "mypassword";  //my fake database password
+    	$dbname = "mydb";  //your database name
+   	 $dbport = "3306";
+
+    	$conn = mysqli_connect($servername, $username, $password, $dbname, $dbport);
+
+
+            //$conn = mysqli_connect('localhost', 'id', 'passwd', 'hello');
+            if ( !$conn ) die('DB Error');
+ 
+            /* Set to UTF-8 Encoding */
+            mysqli_query($conn, 'set session character_set_connection=utf8;');
+            mysqli_query($conn, 'set session character_set_results=utf8;');
+            mysqli_query($conn, 'set session character_set_client=utf8;');
+              
+            /* Load data */
+
+	
+	//$input= "case02" ;
+	$input = $_GET['id'];
+            $query = "SELECT * FROM customer2 where id = '".$input."' order by time DESC";
+            $result = mysqli_query($conn, $query);
+	$total_rows = mysqli_num_rows($result);
+
+	if($total_rows == 0)
+	{
+		//echo "아이디 정보와 일치하는 정보가 없습니다.";
+	}           
+	$row = mysqli_fetch_array($result);  	
+            mysqli_close($conn);
+        ?>
+
+
+
+
+
+
+
+
+		
+		  	<section id="menu1" class="content">		  	 	
+		  	</section>
+		  	<section id="menu2" class="content">
+		  	 	<h2></h2>
+		  	 	<div class="conbox">
+		  	 		<section class="content_wrap">
+		  	 			<h3>도서상세내용</h3>
+		  	 			<!--도서 상세 정보-->
+		  	 			<div class="book_detail">
+		  	 				<article class="notebook">
+		  	 					<div class="detail_content">
+
+
+<?php if($total_rows == 0): ?>
+	<div class = "img_book">
+		<img src="./images/book_read.png" alt="Do it! HTML5+CSS3 웹 표준의 정석 <개정판>" />
+		<br>
+		<img src="./images/input_error1.png" alt="Do it! HTML5+CSS3 웹 표준의 정석 <개정판>" />
+	</div>
+
+<?php elseif ($total_rows != 0): ?>
+
+
+<?php if ($row['score'] == 1): ?>
+	<div class = "img_book">
+		<img src="./images/01.png" alt="Do it! HTML5+CSS3 웹 표준의 정석 <개정판>" />
+	</div>
+	
+	<section class="book_description">
+		<br>
+		<ul class="bullet_list">							
+			<img src="./images/name.png">
+		  	<br><br> 						
+			<li><em>아이디 </em> <? echo $row['id']; ?> </li>								
+			<li><em>측정시간 </em> <? echo $row['time']; ?></li>
+			<li><em>좌측 피부온도 </em> <? echo $row['leftTemp']; ?></li>								
+			<li><em>우측 피부온도 </em> <? echo $row['rightTemp']; ?></li>								
+			<li><em>평균 온도차이 </em> <? echo abs($row['leftTemp'] - $row['rightTemp']); ?></li>								
+			<!--<li><em>피부점수 </em> 4.0 / 10.0</li>-->
+			<br><Br>																
+											
+			<!--<li><em>I S B N </em> 979-11-87370-68-0 13000</li>								
+			<li><em>정가 </em> 28,000 원</li>								
+			<li><em>상태 </em> 판매중</li>-->							
+		</ul>							
+										
+			<p class="point_text">							
+				<strong>측정결과 정상입니다. <br> 앞으로도 건강하세요.   </strong> 							
+			</p>								
+			<!--<a href="http://easyspub.co.kr/20_Menu/BookView/119/PUB" class="commbtn pink" target="blank">구매사이트</a>-->								
+	</section>									
+
+
+<?php elseif ($row['score'] == 2): ?>
+	<div class = "img_book">
+		<img src="./images/03.png" alt="Do it! HTML5+CSS3 웹 표준의 정석 <개정판>" />
+	</div>
+	
+	<section class="book_description">
+		<br>
+		<ul class="bullet_list">							
+			<img src="./images/name.png">
+		  	<br><br> 						
+			<li><em>아이디 </em> <? echo $row['id']; ?> </li>								
+			<li><em>측정시간 </em> <? echo $row['time']; ?></li>
+			<li><em>좌측 피부온도 </em> <? echo $row['leftTemp']; ?></li>								
+			<li><em>우측 피부온도 </em> <? echo $row['rightTemp']; ?></li>								
+			<li><em>평균 온도차이 </em> <? echo abs($row['leftTemp'] - $row['rightTemp']); ?></li>								
+			<!--<li><em>피부점수 </em> 4.0 / 10.0</li>-->
+			<br><Br>																
+											
+			<!--<li><em>I S B N </em> 979-11-87370-68-0 13000</li>								
+			<li><em>정가 </em> 28,000 원</li>								
+			<li><em>상태 </em> 판매중</li>-->							
+		</ul>							
+										
+			<p class="point_text">							
+				<strong>측정결과 위험군입니다. <br> 즉시 병원 방문가세요.   </strong> 							
+			</p>								
+			<!--<a href="http://easyspub.co.kr/20_Menu/BookView/119/PUB" class="commbtn pink" target="blank">구매사이트</a>-->								
+	</section>
+
+<?php elseif ($row['score'] == 3): ?>
+	<div class = "img_book">
+		<img src="./images/02.png" alt="Do it! HTML5+CSS3 웹 표준의 정석 <개정판>" />
+	</div>
+	
+	<section class="book_description">
+		<br>
+		<ul class="bullet_list">							
+			<img src="./images/name.png">
+		  	<br><br> 						
+			<li><em>아이디 </em> <? echo $row['id']; ?> </li>								
+			<li><em>측정시간 </em> <? echo $row['time']; ?></li>
+			<li><em>좌측 피부온도 </em> <? echo $row['leftTemp']; ?></li>								
+			<li><em>우측 피부온도 </em> <? echo $row['rightTemp']; ?></li>								
+			<li><em>평균 온도차이 </em> <? echo abs($row['leftTemp'] - $row['rightTemp']); ?></li>								
+			<!--<li><em>피부점수 </em> 4.0 / 10.0</li>-->
+			<br><Br>																
+											
+			<!--<li><em>I S B N </em> 979-11-87370-68-0 13000</li>								
+			<li><em>정가 </em> 28,000 원</li>								
+			<li><em>상태 </em> 판매중</li>-->							
+		</ul>							
+										
+			<p class="point_text">							
+				<strong>측정결과 의심군입니다. <br> 내일 다시 측정 해보세요.   </strong> 							
+			</p>								
+			<!--<a href="http://easyspub.co.kr/20_Menu/BookView/119/PUB" class="commbtn pink" target="blank">구매사이트</a>-->								
+	</section>								
+
+<?php elseif ($row['score'] == 4): ?>
+	<div class = "img_book">
+		<img src="./images/08.png" alt="Do it! HTML5+CSS3 웹 표준의 정석 <개정판>" />
+	</div>
+	
+	<section class="book_description">
+		<br>
+		<ul class="bullet_list">							
+			<img src="./images/name.png">
+		  	<br><br> 						
+			<li><em>아이디 </em> <? echo $row['id']; ?> </li>								
+			<li><em>측정시간 </em> <? echo $row['time']; ?></li>
+			<li><em>좌측 피부온도 </em> <? echo $row['leftTemp']; ?></li>								
+			<li><em>우측 피부온도 </em> <? echo $row['rightTemp']; ?></li>								
+			<li><em>평균 온도차이 </em> <? echo abs($row['leftTemp'] - $row['rightTemp']); ?></li>								
+			<!--<li><em>피부점수 </em> 4.0 / 10.0</li>-->
+			<br><Br>																
+											
+			<!--<li><em>I S B N </em> 979-11-87370-68-0 13000</li>								
+			<li><em>정가 </em> 28,000 원</li>								
+			<li><em>상태 </em> 판매중</li>-->							
+		</ul>							
+										
+			<p class="point_text">							
+				<strong>측정결과 정상입니다. <br> 지난 측정 때 보다 호전되었습니다.   </strong> 							
+			</p>								
+			<!--<a href="http://easyspub.co.kr/20_Menu/BookView/119/PUB" class="commbtn pink" target="blank">구매사이트</a>-->								
+	</section>
+
+<?php elseif ($row['score'] == 5): ?>
+	<div class = "img_book">
+		<img src="./images/09.png" alt="Do it! HTML5+CSS3 웹 표준의 정석 <개정판>" />
+	</div>
+	
+	<section class="book_description">
+		<br>
+		<ul class="bullet_list">							
+			<img src="./images/name.png">
+		  	<br><br> 						
+			<li><em>아이디 </em> <? echo $row['id']; ?> </li>								
+			<li><em>측정시간 </em> <? echo $row['time']; ?></li>
+			<li><em>좌측 피부온도 </em> <? echo $row['leftTemp']; ?></li>								
+			<li><em>우측 피부온도 </em> <? echo $row['rightTemp']; ?></li>								
+			<li><em>평균 온도차이 </em> <? echo abs($row['leftTemp'] - $row['rightTemp']); ?></li>								
+			<!--<li><em>피부점수 </em> 4.0 / 10.0</li>-->
+			<br><Br>																
+											
+			<!--<li><em>I S B N </em> 979-11-87370-68-0 13000</li>								
+			<li><em>정가 </em> 28,000 원</li>								
+			<li><em>상태 </em> 판매중</li>-->							
+		</ul>							
+										
+			<p class="point_text">							
+				<strong>측정결과 위험군입니다. <br> 지난 측정 때 보다 악화되었습니다.   </strong> 							
+			</p>								
+			<!--<a href="http://easyspub.co.kr/20_Menu/BookView/119/PUB" class="commbtn pink" target="blank">구매사이트</a>-->								
+	</section>
+
+<?php elseif ($row['score'] == 6): ?>
+	<div class = "img_book">
+		<img src="./images/12.png" alt="Do it! HTML5+CSS3 웹 표준의 정석 <개정판>" />
+	</div>
+	
+	<section class="book_description">
+		<br>
+		<ul class="bullet_list">							
+			<img src="./images/name.png">
+		  	<br><br> 						
+			<li><em>아이디 </em> <? echo $row['id']; ?> </li>								
+			<li><em>측정시간 </em> <? echo $row['time']; ?></li>
+			<li><em>좌측 피부온도 </em> <? echo $row['leftTemp']; ?></li>								
+			<li><em>우측 피부온도 </em> <? echo $row['rightTemp']; ?></li>								
+			<li><em>평균 온도차이 </em> <? echo abs($row['leftTemp'] - $row['rightTemp']); ?></li>								
+			<!--<li><em>피부점수 </em> 4.0 / 10.0</li>-->
+			<br><Br>																
+											
+			<!--<li><em>I S B N </em> 979-11-87370-68-0 13000</li>								
+			<li><em>정가 </em> 28,000 원</li>								
+			<li><em>상태 </em> 판매중</li>-->							
+		</ul>							
+										
+			<p class="point_text">							
+				<strong>측정결과 위험군입니다. <br> 지난 측정 때와 비슷합니다.   </strong> 							
+			</p>								
+			<!--<a href="http://easyspub.co.kr/20_Menu/BookView/119/PUB" class="commbtn pink" target="blank">구매사이트</a>-->								
+	</section>
+<?php else: ?>
+	<div class = "img_book">
+		<img src="./images/book_read.png" alt="Do it! HTML5+CSS3 웹 표준의 정석 <개정판>" />
+		<br>
+		<img src="./images/input_error2.png" alt="Do it! HTML5+CSS3 웹 표준의 정석 <개정판>" />
+	</div>	
+
+<?php endif ?>
+<?php endif ?>
+
+
+
+
+
+
+		
+									
+								</div>
+							</article>
+						</div>
+						
+			
+
+		  	 		</section>
+		  	 	</div>
+		  	</section>
+		  	<section id="menu3" class="content">
+		  	 	<h2></h2>
+		  	 	<div class="conbox">
+		  	 		<section class="content_wrap"></section>
+		  	 	</div>
+		  	</section>
+		  	<section id="menu4" class="content">
+		  	 	<h2></h2>
+		  	 	<div class="conbox">
+		  	 		<section class="content_wrap"></section>
+		  	 	</div>
+		  	</section>
+
+	<script type="text/javascript" src="./js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="./js/uiplus.js"></script>
+</body>
+</html>
+
+ 
+
+
